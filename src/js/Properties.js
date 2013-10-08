@@ -29,9 +29,13 @@ axs.properties.TEXT_CONTENT_XPATH = './/text()[normalize-space(.)!=""]/parent::*
 axs.properties.getFocusProperties = function(element) {
     var focusProperties = {};
     var tabindex = element.getAttribute('tabindex');
-    if (tabindex != undefined)
+    if (tabindex != undefined) {
         focusProperties['tabindex'] = { value: tabindex, valid: true };
-    else
+    } else {
+        if (axs.utils.isElementImplicitlyFocusable(element))
+            focusProperties['implicitlyFocusable'] = { value: true, valid: true };
+    }
+    if (Object.keys(focusProperties).length == 0)
         return null;
     var transparent = axs.utils.elementIsTransparent(element);
     var zeroArea = axs.utils.elementHasZeroArea(element);
