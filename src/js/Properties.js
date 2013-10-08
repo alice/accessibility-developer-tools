@@ -50,8 +50,9 @@ axs.properties.getFocusProperties = function(element) {
         }
     }
     if (transparent || zeroArea || outsideScrollArea || overlappingElement) {
+        var hidden = axs.utils.isElementOrAncestorHidden(element);
         var visibleProperties = { value: false,
-                                  valid: false }
+                                  valid: hidden }
         if (transparent)
             visibleProperties['transparent'] = true;
         if (zeroArea)
@@ -60,13 +61,41 @@ axs.properties.getFocusProperties = function(element) {
             visibleProperties['outsideScrollArea'] = true;
         if (overlappingElement)
             visibleProperties['overlappingElement'] = overlappingElement;
-
+        visibleProperties['hidden'] = { value: hidden,
+                                        reason: axs.properties.getHiddenReason(element),
+                                        valid: hidden };
         focusProperties['visible'] = visibleProperties;
     } else {
-        focusProperties['visible'] = { value: true, valid: true };
+        focusProperties['visible'] = { value: 'visible', valid: true };
     }
 
     return focusProperties;
+}
+
+axs.properties.getHiddenReason = function(element) {
+    if (!element || !(element instanceof element.ownerDocument.defaultView.HTMLElement))
+      return null;
+
+    if (element.hasAttribute('chromevoxignoreariahidden'))
+        var chromevoxignoreariahidden = true;
+
+    var style = window.getComputedStyle(element, null);
+    if (style.display == 'none')
+        return { 'property': 'display: none',
+                 'on': element };
+
+    if (style.visibility == 'hidden')
+        return { 'property': 'visibility: hidden',
+                 'on': element };
+
+    if (element.hasAttribute('aria-hidden') &&
+        element.getAttribute('aria-hidden').toLowerCase() == 'true') {
+        if (!chromevoxignoreariahidden)
+            return { 'property': 'aria-hidden',
+                     'on': element };
+    }
+
+    return axs.properties.getHiddenReason(element.parentElement);
 }
 
 /**
