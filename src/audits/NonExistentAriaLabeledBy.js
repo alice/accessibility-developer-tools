@@ -19,15 +19,15 @@ goog.require('axs.constants.Severity');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.nonExistentAriaLabelledbyElement = {
-    name: 'nonExistentAriaLabelledbyElement',
-    heading: 'aria-labelledby attributes should refer to an element which exists in the DOM',
-    url: 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_aria_02--aria-labelledby-attributes-should-refer-to-an-element-which-exists-in-the-dom',
-    severity: axs.constants.Severity.WARNING,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['nonExistentAriaLabelledbyElement'] = {
+    'name': 'nonExistentAriaLabelledbyElement',
+    'heading': 'aria-labelledby attributes should refer to an element which exists in the DOM',
+    'url': 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_aria_02--aria-labelledby-attributes-should-refer-to-an-element-which-exists-in-the-dom',
+    'severity': axs.constants.Severity.WARNING,
+    'relevantElementMatcher': function(element) {
         return axs.browserUtils.matchSelector(element, '[aria-labelledby]');
     },
-    test: function(element) {
+    'test': function(element) {
         var labelledBy = element.getAttribute('aria-labelledby');
         var labelledByValues = labelledBy.split(/\s+/);
         for (var i = 0; i < labelledByValues.length; i++) {
@@ -37,5 +37,5 @@ axs.AuditRule.specs.nonExistentAriaLabelledbyElement = {
         }
         return false;
     },
-    code: 'AX_ARIA_02'
+    'code': 'AX_ARIA_02'
 };

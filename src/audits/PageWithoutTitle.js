@@ -18,15 +18,15 @@ goog.require('axs.constants.Severity');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.pageWithoutTitle = {
-    name: 'pageWithoutTitle',
-    heading: 'The web page should have a title that describes topic or purpose',
-    url: '',
-    severity: axs.constants.Severity.WARNING,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['pageWithoutTitle'] = {
+    'name': 'pageWithoutTitle',
+    'heading': 'The web page should have a title that describes topic or purpose',
+    'url': '',
+    'severity': axs.constants.Severity.WARNING,
+    'relevantElementMatcher': function(element) {
         return element.tagName.toLowerCase() == "html";
     },
-    test: function(scope) {
+    'test': function(scope) {
         var head = scope.querySelector('head');
         if (!head)
           return true;
@@ -35,5 +35,5 @@ axs.AuditRule.specs.pageWithoutTitle = {
             return true;
         return !title.textContent;
     },
-    code: 'AX_TITLE_01'
+    'code': 'AX_TITLE_01'
 };

@@ -21,12 +21,12 @@ goog.require('axs.utils');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.controlsWithoutLabel = {
-    name: 'controlsWithoutLabel',
-    heading: 'Controls and media elements should have labels',
-    url: 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_text_01--controls-and-media-elements-should-have-labels',
-    severity: axs.constants.Severity.SEVERE,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['controlsWithoutLabel'] = {
+    'name': 'controlsWithoutLabel',
+    'heading': 'Controls and media elements should have labels',
+    'url': 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_text_01--controls-and-media-elements-should-have-labels',
+    'severity': axs.constants.Severity.SEVERE,
+    'relevantElementMatcher': function(element) {
         var controlsSelector = ['input:not([type="hidden"]):not([disabled])',
                                 'select:not([disabled])',
                                 'textarea:not([disabled])',
@@ -47,7 +47,7 @@ axs.AuditRule.specs.controlsWithoutLabel = {
         }
         return true;
     },
-    test: function(control) {
+    'test': function(control) {
         if (axs.utils.isElementOrAncestorHidden(control))
             return false;
         if (control.tagName.toLowerCase() == 'input' &&
@@ -64,6 +64,6 @@ axs.AuditRule.specs.controlsWithoutLabel = {
             return true;
         return false;
     },
-    code: 'AX_TEXT_01',
-    ruleName: 'Controls and media elements should have labels'
+    'code': 'AX_TEXT_01',
+    'ruleName': 'Controls and media elements should have labels'
 };

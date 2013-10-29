@@ -21,12 +21,12 @@ goog.require('axs.utils');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.focusableElementNotVisibleAndNotAriaHidden = {
-    name: 'focusableElementNotVisibleAndNotAriaHidden',
-    heading: 'These elements are focusable but either invisible or obscured by another element',
-    url: 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_focus_01--these-elements-are-focusable-but-either-invisible-or-obscured-by-another-element',
-    severity: axs.constants.Severity.WARNING,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['focusableElementNotVisibleAndNotAriaHidden'] = {
+    'name': 'focusableElementNotVisibleAndNotAriaHidden',
+    'heading': 'These elements are focusable but either invisible or obscured by another element',
+    'url': 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_focus_01--these-elements-are-focusable-but-either-invisible-or-obscured-by-another-element',
+    'severity': axs.constants.Severity.WARNING,
+    'relevantElementMatcher': function(element) {
         var isFocusable = axs.browserUtils.matchSelector(
             element, axs.utils.FOCUSABLE_ELEMENTS_SELECTOR);
         if (!isFocusable)
@@ -44,11 +44,11 @@ axs.AuditRule.specs.focusableElementNotVisibleAndNotAriaHidden = {
         return true;
 
     },
-    test: function(element) {
+    'test': function(element) {
         if (axs.utils.isElementOrAncestorHidden(element))
             return false;
         element.focus();
         return !axs.utils.elementIsVisible(element)
     },
-    code: 'AX_FOCUS_01'
+    'code': 'AX_FOCUS_01'
 };

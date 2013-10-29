@@ -107,6 +107,20 @@ goog.exportProperty(axs.AuditResults.prototype, 'getWarnings',
  */
 axs.AuditResults.prototype.toString = function() {
   var message = '';
+
+  if (this.errors_.length > 0) {
+    message += this.errors_.length +
+        (this.errors_.length == 1 ? ' error ' : ' errors ');
+    if (this.warnings_.length > 0)
+      message += 'and ';
+  }
+  if (this.warnings_.length > 0) {
+    message += this.warnings_.length +
+      (this.warnings_.length == 1 ? ' warning ' : ' warnings ');
+  }
+  if (this.errors_.length == 0 && this.warnings_.length == 0)
+    message += 'no issues';
+
   for (var i = 0; i < this.errors_.length; i++) {
     if (i == 0) {
       message += '\nErrors:\n';

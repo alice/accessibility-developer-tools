@@ -38,28 +38,35 @@ axs.AuditRule = function(spec) {
     }
 
     /** @type {string} */
-    this.name = spec.name;
+    this.name = spec['name'];
 
     /** @type {axs.constants.Severity} */
-    this.severity = spec.severity;
+    this.severity = spec['severity'];
 
     /** @type {function(Element): boolean} */
-    this.relevantElementMatcher_ = spec.relevantElementMatcher;
+    this.relevantElementMatcher_ = spec['relevantElementMatcher'];
 
     /** @type {function(Element): boolean} */
-    this.test_ = spec.test;
+    this.test_ = spec['test'];
 
     /** @type {string} */
-    this.code = spec.code;
+    this.code = spec['code'];
 
     /** @type {string} */
-    this.heading = spec.heading || '';
+    this.heading = spec['heading'] || '';
 
     /** @type {string} */
-    this.url = spec.url || '';
+    this.url = spec['url'] || '';
 
     /** @type {boolean} */
     this.requiresConsoleAPI = !!spec['opt_requiresConsoleAPI'];
+
+    goog.exportProperty(this, 'name', this.name);
+    goog.exportProperty(this, 'severity', this.severity);
+    goog.exportProperty(this, 'code', this.code);
+    goog.exportProperty(this, 'heading', this.heading);
+    goog.exportProperty(this, 'url', this.url);
+    goog.exportProperty(this, 'requiresConsoleAPI', this.requiresConsoleAPI);
 };
 
 /** @typedef {{ name: string,

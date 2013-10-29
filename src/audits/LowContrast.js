@@ -21,19 +21,19 @@ goog.require('axs.utils');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.lowContrastElements = {
-    name: 'lowContrastElements',
-    heading: 'Text elements should have a reasonable contrast ratio',
-    url: 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_color_01--text-elements-should-have-a-reasonable-contrast-ratio',
-    severity: axs.constants.Severity.WARNING,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['lowContrastElements'] = {
+    'name': 'lowContrastElements',
+    'heading': 'Text elements should have a reasonable contrast ratio',
+    'url': 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_color_01--text-elements-should-have-a-reasonable-contrast-ratio',
+    'severity': axs.constants.Severity.WARNING,
+    'relevantElementMatcher': function(element) {
         return axs.properties.hasDirectTextDescendant(element);
     },
-    test: function(element) {
+    'test': function(element) {
         var style = window.getComputedStyle(element, null);
         var contrastRatio =
             axs.utils.getContrastRatioForElementWithComputedStyle(style, element);
         return (contrastRatio && axs.utils.isLowContrast(contrastRatio, style));
     },
-    code: 'AX_COLOR_01'
+    'code': 'AX_COLOR_01'
 };

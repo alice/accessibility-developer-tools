@@ -20,19 +20,19 @@ goog.require('axs.utils');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.badAriaAttributeValue = {
-    name: 'badAriaAttributeValue',
-    heading: 'ARIA state and property values must be valid',
-    url: '',
-    severity: axs.constants.Severity.SEVERE,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['badAriaAttributeValue'] = {
+    'name': 'badAriaAttributeValue',
+    'heading': 'ARIA state and property values must be valid',
+    'url': '',
+    'severity': axs.constants.Severity.SEVERE,
+    'relevantElementMatcher': function(element) {
         var selector = '';
         for (var property in axs.constants.ARIA_PROPERTIES)
             selector += '[aria-' + property + '],';
         selector = selector.substring(0, selector.length - 1);  // trailing comma
         return axs.browserUtils.matchSelector(element, selector);
     },
-    test: function(element) {
+    'test': function(element) {
         for (var property in axs.constants.ARIA_PROPERTIES) {
             var ariaProperty = 'aria-' + property;
             if (!element.hasAttribute(ariaProperty))
@@ -44,5 +44,5 @@ axs.AuditRule.specs.badAriaAttributeValue = {
         }
         return false;
     },
-    code: 'AX_ARIA_04'
+    'code': 'AX_ARIA_04'
 };

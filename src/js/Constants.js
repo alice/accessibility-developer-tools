@@ -989,12 +989,12 @@ axs.constants.MIXED_VALUES = {
 // pull values lists into sets
 for (var propertyName in axs.constants.ARIA_PROPERTIES) {
     var propertyDetails = axs.constants.ARIA_PROPERTIES[propertyName];
-    if (!propertyDetails.values)
+    if (!propertyDetails['values'])
         continue;
     var valuesSet = {};
-    for (var i = 0; i < propertyDetails.values.length; i++)
-        valuesSet[propertyDetails.values[i]] = true;
-    propertyDetails.valuesSet = valuesSet;
+    for (var i = 0; i < propertyDetails['values'].length; i++)
+        valuesSet[propertyDetails['values'][i]] = true;
+    propertyDetails['valuesSet'] = valuesSet;
 }
 })();
 

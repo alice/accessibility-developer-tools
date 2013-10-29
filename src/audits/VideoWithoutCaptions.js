@@ -18,17 +18,17 @@ goog.require('axs.constants.Severity');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.videoWithoutCaptions = {
-    name: 'videoWithoutCaptions',
-    heading: 'Video elements should use <track> elements to provide captions',
-    url: 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_video_01--video-elements-should-use-track-elements-to-provide-captions',
-    severity: axs.constants.Severity.WARNING,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['videoWithoutCaptions'] = {
+    'name': 'videoWithoutCaptions',
+    'heading': 'Video elements should use <track> elements to provide captions',
+    'url': 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_video_01--video-elements-should-use-track-elements-to-provide-captions',
+    'severity': axs.constants.Severity.WARNING,
+    'relevantElementMatcher': function(element) {
         return axs.browserUtils.matchSelector(element, 'video');
     },
-    test: function(video) {
+    'test': function(video) {
         var captions = video.querySelectorAll('track[kind=captions]');
         return !captions.length;
     },
-    code: 'AX_VIDEO_01'
+    'code': 'AX_VIDEO_01'
 };

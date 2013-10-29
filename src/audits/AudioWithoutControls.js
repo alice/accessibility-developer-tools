@@ -18,17 +18,17 @@ goog.require('axs.constants.Severity');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.audioWithoutControls = {
-    name: 'audioWithoutControls',
-    heading: 'Audio elements should have controls',
-    url: '',
-    severity: axs.constants.Severity.WARNING,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['audioWithoutControls'] = {
+    'name': 'audioWithoutControls',
+    'heading': 'Audio elements should have controls',
+    'url': '',
+    'severity': axs.constants.Severity.WARNING,
+    'relevantElementMatcher': function(element) {
         return axs.browserUtils.matchSelector(element, 'audio[autoplay]');
     },
-    test: function(audio) {
+    'test': function(audio) {
         var controls = audio.querySelectorAll('[controls]');
         return !controls.length && audio.duration > 3;
     },
-    code: 'AX_AUDIO_01'
+    'code': 'AX_AUDIO_01'
 };

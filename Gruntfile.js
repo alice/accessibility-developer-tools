@@ -31,7 +31,7 @@ module.exports = function(grunt) {
           "formatting": "PRETTY_PRINT",
           "summary_detail_level": 3,
           "warning_level": "VERBOSE",
-          "compilation_level": "SIMPLE_OPTIMIZATIONS",
+          "compilation_level": "ADVANCED_OPTIMIZATIONS",
           "output_wrapper": "'<%= grunt.file.read('scripts/output_wrapper.txt') %>'",
           "externs": "./src/js/externs/externs.js"
         }

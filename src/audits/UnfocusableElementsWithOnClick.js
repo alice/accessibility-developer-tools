@@ -20,29 +20,29 @@ goog.require('axs.utils');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.unfocusableElementsWithOnClick = {
-    name: 'unfocusableElementsWithOnClick',
-    heading: 'Elements with onclick handlers must be focusable',
-    url: 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_focus_02--elements-with-onclick-handlers-must-be-focusable',
-    severity: axs.constants.Severity.WARNING,
-    opt_requiresConsoleAPI: true,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['unfocusableElementsWithOnClick'] = {
+    'name': 'unfocusableElementsWithOnClick',
+    'heading': 'Elements with onclick handlers must be focusable',
+    'url': 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_focus_02--elements-with-onclick-handlers-must-be-focusable',
+    'severity': axs.constants.Severity.WARNING,
+    'opt_requiresConsoleAPI': true,
+    'relevantElementMatcher': function(element) {
         // element.ownerDocument may not be current document if it is in an iframe
-        if (element instanceof element.ownerDocument.defaultView.HTMLBodyElement) {
+        if (element instanceof element.ownerDocument.defaultView['HTMLBodyElement']) {
             return false;
         }
         if (axs.utils.isElementOrAncestorHidden(element)) {
             return false;
         }
         var eventListeners = getEventListeners(element);
-        if ('click' in eventListeners) {
+        if ('click' in eventListeners)
             return true;
-        }
+
         return false;
     },
-    test: function(element) {
+    'test': function(element) {
         return !element.hasAttribute('tabindex') &&
                !axs.utils.isElementImplicitlyFocusable(element);
     },
-    code: 'AX_FOCUS_02'
+    'code': 'AX_FOCUS_02'
 };

@@ -66,7 +66,7 @@ axs.properties.getFocusProperties = function(element) {
 }
 
 axs.properties.getHiddenReason = function(element) {
-    if (!element || !(element instanceof element.ownerDocument.defaultView.HTMLElement))
+    if (!element || !(element instanceof element.ownerDocument.defaultView['HTMLElement']))
       return null;
 
     if (element.hasAttribute('chromevoxignoreariahidden'))
@@ -235,7 +235,7 @@ axs.properties.findTextAlternatives = function(node, textAlternatives, opt_recur
 
         // include the value of the embedded control as part of the text alternative in the
         // following manner:
-        if (element instanceof defaultView.HTMLInputElement) {
+        if (element instanceof defaultView['HTMLInputElement']) {
             // If the embedded control is a text field, use its value.
             var inputElement = /** @type {HTMLInputElement} */ (element);
             if (inputElement.type == 'text') {
@@ -250,7 +250,7 @@ axs.properties.findTextAlternatives = function(node, textAlternatives, opt_recur
         }
         // If the embedded control is a menu, use the text alternative of the chosen menu item.
         // If the embedded control is a select or combobox, use the chosen option.
-        if (element instanceof defaultView.HTMLSelectElement) {
+        if (element instanceof defaultView['HTMLSelectElement']) {
             var inputElement = /** @type {HTMLSelectElement} */ (element);
             textAlternatives['controlValue'] = { 'text': inputElement.value };
         }

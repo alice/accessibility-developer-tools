@@ -166,6 +166,7 @@ axs.Audit.run = function(opt_configuration) {
     for (var i = 0; i < auditRules.length; i++) {
         var auditRuleName = auditRules[i];
         var auditRule = axs.AuditRules.getRule(auditRuleName);
+
         if (!auditRule)
             continue; // Shouldn't happen, but fail silently if it does.
         if (auditRule.disabled)

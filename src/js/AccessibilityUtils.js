@@ -892,7 +892,7 @@ axs.utils.hasLabel = function(element) {
  * @return {boolean} True if the element is hidden from accessibility.
  */
 axs.utils.isElementHidden = function(element) {
-    if (!(element instanceof element.ownerDocument.defaultView.HTMLElement))
+    if (!(element instanceof element.ownerDocument.defaultView['HTMLElement']))
       return false;
 
     if (element.hasAttribute('chromevoxignoreariahidden'))
@@ -1097,7 +1097,7 @@ axs.utils.getAriaPropertyValue = function(propertyName, value, element) {
 axs.utils.isValidTokenValue = function(propertyName, value) {
     var propertyKey = propertyName.replace(/^aria-/, '');
     var propertyDetails = axs.constants.ARIA_PROPERTIES[propertyKey];
-    var possibleValues = propertyDetails.valuesSet;
+    var possibleValues = propertyDetails['valuesSet'];
     return axs.utils.isPossibleValue(value, possibleValues, propertyName);
 };
 
