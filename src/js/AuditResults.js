@@ -27,7 +27,7 @@ axs.AuditResults = function() {
   this.errors_ = [];
 
   /**
-   * The warnings receive from the audit run.
+   * The warnings received from the audit run.
    * @type {Array.<string>}
    * @private
    */
@@ -139,5 +139,3 @@ axs.AuditResults.prototype.toString = function() {
 };
 goog.exportProperty(axs.AuditResults.prototype, 'toString',
                     axs.AuditResults.prototype.toString);
-
-

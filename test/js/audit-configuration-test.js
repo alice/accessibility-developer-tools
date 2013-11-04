@@ -19,7 +19,7 @@ test("Basic AuditConfiguration with no customisation", function() {
   var sortedAuditRules = this.auditRules_.sort();
   var sortedResults = results.sort(function(r1, r2) {
     var r1Name = r1.rule.name;
-    var r2Name = r2.rule.name;
+    var r2Name = r2.rule.name;i
     return r1Name.localeCompare(r2Name);
   });
   for (var i = 0; i < sortedAuditRules.length; i++)

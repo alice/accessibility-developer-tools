@@ -5,9 +5,13 @@ test('Empty idref value is ok', function() {
     var div = document.createElement('div');
     fixture.appendChild(div);
     div.setAttribute('aria-activedescendant', '');
+
+    var expectedResult = new axs.AuditResult(axs.constants.AuditResult.PASS);
+    expectedResult.elements = [];
+
     deepEqual(
       axs.AuditRules.getRule('badAriaAttributeValue').run({ scope: fixture }),
-      { elements: [], result: axs.constants.AuditResult.PASS }
+      expectedResult
     );
 });
 
@@ -16,9 +20,13 @@ test('Bad number value doesn\'t cause crash', function() {
     var div = document.createElement('div');
     fixture.appendChild(div);
     div.setAttribute('aria-valuenow', 'foo');
+
+    var expectedResult = new axs.AuditResult(axs.constants.AuditResult.FAIL);
+    expectedResult.elements = [div];
+
     deepEqual(
       axs.AuditRules.getRule('badAriaAttributeValue').run({ scope: fixture }),
-      { elements: [div], result: axs.constants.AuditResult.FAIL }
+      expectedResult
     );
 });
 
@@ -27,8 +35,12 @@ test('Good number value is good', function() {
     var div = document.createElement('div');
     fixture.appendChild(div);
     div.setAttribute('aria-valuenow', '10');
+
+    var expectedResult = new axs.AuditResult(axs.constants.AuditResult.PASS);
+    expectedResult.elements = [];
+
     deepEqual(
       axs.AuditRules.getRule('badAriaAttributeValue').run({ scope: fixture }),
-      { elements: [], result: axs.constants.AuditResult.PASS }
+      expectedResult
     );
 });

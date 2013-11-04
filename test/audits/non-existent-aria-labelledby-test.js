@@ -12,8 +12,10 @@ test("Element exists, single aria-labelledby value", function() {
     fixture.appendChild(labelledByElement);
 
     var rule = axs.AuditRules.getRule('nonExistentAriaLabelledbyElement');
+    var expectedResult = new axs.AuditResult(axs.constants.AuditResult.PASS);
+    expectedResult.elements = [];
     deepEqual(rule.run({ scope: fixture }),
-              { elements: [], result: axs.constants.AuditResult.PASS });
+              expectedResult);
 });
 
 test("Element doesn't exist, single aria-labelledby value", function() {
@@ -45,8 +47,10 @@ test("Multiple label elements exist", function() {
     fixture.appendChild(labelledByElement);
 
     var rule = axs.AuditRules.getRule('nonExistentAriaLabelledbyElement');
+    var expectedResult = new axs.AuditResult(axs.constants.AuditResult.PASS);
+    expectedResult.elements = [];
     deepEqual(rule.run({ scope: fixture }),
-              { elements: [], result: axs.constants.AuditResult.PASS });
+              expectedResult);
 
 });
 
@@ -83,6 +87,7 @@ test("Using ignoreSelectors", function() {
     var rule = axs.AuditRules.getRule('nonExistentAriaLabelledbyElement');
     var ignoreSelectors = ['#labelledbyElement2'];
     var result = rule.run({ ignoreSelectors: ignoreSelectors, scope: fixture });
+
     equal(result.result, axs.constants.AuditResult.PASS);
 });
 

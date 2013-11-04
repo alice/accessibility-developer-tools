@@ -34,3 +34,4 @@ axs.AuditRules.getRule = function(name) {
 
     return axs.AuditRules.rules[name];
 };
+goog.exportSymbol('axs.AuditRules.getRule', axs.AuditRules.getRule);
