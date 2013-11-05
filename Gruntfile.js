@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         },
         options: {
           "language_in": "ECMASCRIPT5",
-          "formatting": "PRETTY_PRINT",  // Uncomment to get one statement per line
+//          "formatting": "PRETTY_PRINT",  // Uncomment to get one statement per line
           "summary_detail_level": 3,
           "warning_level": "VERBOSE",
 //        "compilation_level": "SIMPLE_OPTIMIZATIONS",  // Uncomment and comment out below for minimal renaming
