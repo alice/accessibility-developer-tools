@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-goog.require('axs.AuditResults');
 goog.require('axs.AuditRules');
+goog.require('axs.AuditResult');
+goog.require('axs.AuditResults');
 goog.require('axs.utils');
 
 goog.provide('axs.Audit');
@@ -40,6 +41,7 @@ axs.AuditConfiguration = function() {
      * the page which should be audited.
      * If null, the document will be used as the scope.
      * @type {?Element}
+     * @expose
      */
     this.scope = null;
 
@@ -47,6 +49,7 @@ axs.AuditConfiguration = function() {
      * A list of rule names representing the audit rules to be run. If this is
      * empty or |null|, all audit rules will be run.
      * @type {Array.<String>}
+     * @expose
      */
     this.auditRulesToRun = null;
 
@@ -54,6 +57,7 @@ axs.AuditConfiguration = function() {
      * A list of rule names representing the audit rules which should not be run.
      * If this is empty or |null|, all audit rules will be run.
      * @type {Array.<String>}
+     * @expose
      */
     this.auditRulesToIgnore = null;
 
@@ -61,19 +65,17 @@ axs.AuditConfiguration = function() {
      * The maximum number of results to collect for each audit rule. If more
      * than this number of results is found, 'resultsTruncated' is set to true
      * in the result object. If this is null, all results will be returned.
+     * @type {?number}
+     * @expose
      */
     this.maxResults = null;
 
     /**
      * Whether this audit run can use the console API.
      * @type {boolean}
+     * @expose
      */
     this.withConsoleApi = false;
-
-    goog.exportProperty(this, 'scope', this.scope);
-    goog.exportProperty(this, 'auditRulesToRun', this.auditRulesToRun);
-    goog.exportProperty(this, 'auditRulesToIgnore', this.auditRulesToIgnore);
-    goog.exportProperty(this, 'withConsoleApi', this.withConsoleApi);
 };
 goog.exportSymbol('axs.AuditConfiguration', axs.AuditConfiguration);
 
@@ -96,8 +98,8 @@ axs.AuditConfiguration.prototype = {
      * Gets the selectors which have been added to the ignore list for the given
      * audit rule.
      * @param {string} auditRuleName The name of the audit rule
-     * @return {Array.<string>} A list of query selector strings which match nodes
-     * to be ignored for the given rule.
+     * @return {Array.<string>} A list of query selector strings which match
+     * nodes to be ignored for the given rule.
      */
     getIgnoreSelectors: function(auditRuleName) {
         if ((auditRuleName in this.rules_) &&
@@ -119,6 +121,12 @@ axs.AuditConfiguration.prototype = {
         this.rules_[auditRuleName].severity = severity;
     },
 
+    /**
+     * Gets the user-specified  severity for the given audit rule, or null
+     * if no override is set.
+     * @param {string} auditRuleName
+     * @return {?axs.constants.Severity}
+     */
     getSeverity: function(auditRuleName) {
         if (!(auditRuleName in this.rules_))
             return null;
@@ -131,16 +139,15 @@ goog.exportProperty(axs.AuditConfiguration.prototype, 'ignoreSelectors',
                     axs.AuditConfiguration.prototype.ignoreSelectors);
 goog.exportProperty(axs.AuditConfiguration.prototype, 'getIgnoreSelectors',
                     axs.AuditConfiguration.prototype.getIgnoreSelectors);
+goog.exportProperty(axs.AuditConfiguration.prototype, 'setSeverity',
+                    axs.AuditConfiguration.prototype.setSeverity);
+goog.exportProperty(axs.AuditConfiguration.prototype, 'getSeverity',
+                    axs.AuditConfiguration.prototype.getSeverity);
 
 /**
  * Runs an audit with all of the audit rules.
  * @param {axs.AuditConfiguration=} opt_configuration
- * @return {Array.<Object>} Array of Object:
- *     {
- *       result,    // @type {axs.constants.AuditResult}
- *       elements,  // @type {Array.<Element>}
- *       rule       // @type {axs.AuditRule} - data only (name, severity, code)
- *     }
+ * @return {Array.<axs.AuditResult>}
  */
 axs.Audit.run = function(opt_configuration) {
     var configuration = opt_configuration || new axs.AuditConfiguration();
@@ -166,6 +173,7 @@ axs.Audit.run = function(opt_configuration) {
     for (var i = 0; i < auditRules.length; i++) {
         var auditRuleName = auditRules[i];
         var auditRule = axs.AuditRules.getRule(auditRuleName);
+
         if (!auditRule)
             continue; // Shouldn't happen, but fail silently if it does.
         if (auditRule.disabled)
@@ -181,11 +189,11 @@ axs.Audit.run = function(opt_configuration) {
             options['scope'] = configuration.scope;
         if (configuration.maxResults)
             options['maxResults'] = configuration.maxResults;
-        var result = auditRule.run.call(auditRule, options);
+        var result = /** (@type axs.AuditResult}) */ auditRule.run.call(auditRule, options);
         var ruleValues = axs.utils.namedValues(auditRule);
         ruleValues.severity = configuration.getSeverity(auditRuleName) ||
                               ruleValues.severity;
-        result.rule = ruleValues;
+        result['rule'] = ruleValues;
         results.push(result);
     }
 

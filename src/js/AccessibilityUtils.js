@@ -37,18 +37,31 @@ axs.utils.FOCUSABLE_ELEMENTS_SELECTOR =
  * @param {number} alpha
  */
 axs.utils.Color = function(red, green, blue, alpha) {
-    /** @type {number} */
+    /**
+     * @type {number}
+     * @expose
+     */
     this.red = red;
 
-    /** @type {number} */
+    /**
+     * @type {number}
+     * @expose
+     */
     this.green = green;
 
-    /** @type {number} */
+    /**
+     * @type {number}
+     * @expose
+     */
     this.blue = blue;
 
-    /** @type {number} */
+    /**
+     * @type {number}
+     * @expose
+     */
     this.alpha = alpha;
 };
+goog.exportSymbol('axs.utils.Color', axs.utils.Color);
 
 /**
  * Calculate the contrast ratio between the two given colors. Returns the ratio
@@ -71,11 +84,20 @@ axs.utils.calculateContrastRatio = function(fgColor, bgColor) {
         (Math.min(fgLuminance, bgLuminance) + 0.05);
     return contrastRatio;
 };
+goog.exportSymbol('axs.utils.calculateContrastRatio',
+                  axs.utils.calculateContrastRatio);
 
+/**
+ * Calculate the contrast ratio between the two given luminances.
+ * @param {number} luminance1
+ * @param {number} luminance2
+ * @return {number} The contrast ratio.
+ */
 axs.utils.luminanceRatio = function(luminance1, luminance2) {
     return (Math.max(luminance1, luminance2) + 0.05) /
         (Math.min(luminance1, luminance2) + 0.05);
 }
+goog.exportSymbol('axs.utils.luminanceRatio', axs.utils.luminanceRatio);
 
 /**
  * Return the corresponding element for the given node.
@@ -102,6 +124,7 @@ axs.utils.asElement = function(node) {
     }
     return element;
 }
+goog.exportSymbol('axs.utils.asElement', axs.utils.asElement);
 
 /**
  * @param {Element} element
@@ -110,6 +133,8 @@ axs.utils.asElement = function(node) {
 axs.utils.elementIsTransparent = function(element) {
     return element.style.opacity == '0';
 };
+goog.exportSymbol('axs.utils.elementIsTransparent',
+                  axs.utils.elementIsTransparent);
 
 /**
  * @param {Element} element
@@ -123,6 +148,7 @@ axs.utils.elementHasZeroArea = function(element) {
         return true;
     return false;
 };
+goog.exportSymbol('axs.utils.elementHasZeroArea', axs.utils.elementHasZeroArea);
 
 /**
  * @param {Element} element
@@ -140,6 +166,8 @@ axs.utils.elementIsOutsideScrollArea = function(element) {
         return true;
     return false;
 };
+goog.exportSymbol('axs.utils.elementIsOutsideScrollArea',
+                  axs.utils.elementIsOutsideScrollArea);
 
 
 /**
@@ -156,6 +184,7 @@ axs.utils.isAncestor = function(ancestor, node) {
 
     return axs.utils.isAncestor(ancestor, node.parentNode);
 }
+goog.exportSymbol('axs.utils.isAncestor', axs.utils.isAncestor);
 
 /**
  * @param {Element} element
@@ -194,6 +223,8 @@ axs.utils.overlappingElements = function(element) {
 
     return overlappingElements;
 };
+goog.exportSymbol('axs.utils.overlappingElements',
+                  axs.utils.overlappingElements);
 
 /**
  * @param {Element} element
@@ -203,17 +234,19 @@ axs.utils.elementIsHtmlControl = function(element) {
     var defaultView = element.ownerDocument.defaultView;
 
     // HTML control
-    if (element instanceof defaultView.HTMLButtonElement)
+    if (element instanceof defaultView['HTMLButtonElement'])
         return true;
-    if (element instanceof defaultView.HTMLInputElement)
+    if (element instanceof defaultView['HTMLInputElement'])
         return true;
-    if (element instanceof defaultView.HTMLSelectElement)
+    if (element instanceof defaultView['HTMLSelectElement'])
         return true;
-    if (element instanceof defaultView.HTMLTextAreaElement)
+    if (element instanceof defaultView['HTMLTextAreaElement'])
         return true;
 
     return false;
 };
+goog.exportSymbol('axs.utils.elementIsHtmlControl',
+                  axs.utils.elementIsHtmlControl);
 
 /**
  * @param {Element} element
@@ -231,6 +264,8 @@ axs.utils.elementIsAriaWidget = function(element) {
     }
     return false;
 }
+goog.exportSymbol('axs.utils.elementIsAriaWidget',
+                  axs.utils.elementIsAriaWidget);
 
 /**
  * @param {Element} element
@@ -250,6 +285,8 @@ axs.utils.elementIsVisible = function(element) {
 
     return true;
 };
+goog.exportSymbol('axs.utils.elementIsVisible',
+                  axs.utils.elementIsVisible);
 
 /**
  * @param {CSSStyleDeclaration} style
@@ -297,6 +334,7 @@ axs.utils.isLargeFont = function(style) {
     }
     return false;
 };
+goog.exportSymbol('axs.utils.isLargeFont', axs.utils.isLargeFont);
 
 /**
  * @param {CSSStyleDeclaration} style
@@ -321,6 +359,7 @@ axs.utils.getBgColor = function(style, element) {
     }
     return bgColor;
 };
+goog.exportSymbol('axs.utils.getBgColor', axs.utils.getBgColor);
 
 /**
  * Gets the effective background color of the parent of |element|.
@@ -363,7 +402,8 @@ axs.utils.getParentBgColor = function(element) {
         bg = axs.utils.flattenColors(fg, bg);
     }
     return bg;
-}
+};
+goog.exportSymbol('axs.utils.getParentBgColor', axs.utils.getParentBgColor);
 
 /**
  * @param {CSSStyleDeclaration} style
@@ -389,6 +429,7 @@ axs.utils.getFgColor = function(style, element, bgColor) {
 
     return fgColor;
 };
+goog.exportSymbol('axs.utils.getFgColor', axs.utils.getFgColor);
 
 /**
  * @param {string} colorString The color string from CSS.
@@ -418,6 +459,7 @@ axs.utils.parseColor = function(colorString) {
 
     return null;
 };
+goog.exportSymbol('axs.utils.parseColor', axs.utils.parseColor);
 
 /**
  * @param {number} value The value of a color channel, 0 <= value <= 0xFF
@@ -442,7 +484,19 @@ axs.utils.colorToString = function(color) {
     else
         return 'rgba(' + [color.red, color.green, color.blue, color.alpha].join(',') + ')';
 };
+goog.exportSymbol('axs.utils.colorToString', axs.utils.colorToString);
 
+/**
+ * Given a luminance value and target contrast ratio, returns a luminance
+ * value which will have the desired contrast ratio with the given luminance.
+ * i.e. if given L1 and C, return L2 such that L1:L2 = C (if higher == false)
+ * or L2:L1 = C (if higher == true), where : denotes contrast ratio.
+ * @param {number} luminance
+ * @param {number} contrast The target contrast ratio
+ * @param {boolean} higher Whether the returned luminance should be higher or
+ *     lower than the given luminance.
+ * @return {number} The calculated luminance value
+ */
 axs.utils.luminanceFromContrastRatio = function(luminance, contrast, higher) {
     if (higher) {
         var newLuminance = (luminance + 0.05) * contrast - 0.05;
@@ -452,7 +506,21 @@ axs.utils.luminanceFromContrastRatio = function(luminance, contrast, higher) {
         return newLuminance;
     }
 };
+goog.exportSymbol('axs.utils.luminanceFromContrastRatio',
+                  axs.utils.luminanceFromContrastRatio);
 
+/**
+ * Given a color in YCC form and a desired luminance value, translate the given
+ * color towards one of the corners in the Y-axis of the YCC color cube, such
+ * that the new Y-value will be the given luminance value. Return the color
+ * in RGB form.
+ * (More on YCC here: http://en.wikipedia.org/wiki/YCbCr - note that we use
+ * different coefficients for the chroma values as given by
+ * http://www.w3.org/TR/WCAG20/#relativeluminancedef)
+ * @param {Array.<number>} ycc Color in YCC form as an array [Y, C1, C2]
+ * @param {number} luminance The desired luminance value
+ * @return {axs.utils.Color} The translated color in RGB form.
+ */
 axs.utils.translateColor = function(ycc, luminance) {
     var oldLuminance = ycc[0];
     if (oldLuminance > luminance)
@@ -469,13 +537,26 @@ axs.utils.translateColor = function(ycc, luminance) {
     var rgb = axs.utils.fromYCC(translatedColor);
     return rgb;
 };
+goog.exportSymbol('axs.utils.translateColor', axs.utils.translateColor);
 
 /**
+ * Given a pair of foreground and background colors, the pre-calculated contrast
+ * ratio between the two colors, and a style declaration applying to text
+ * which is styled with the given foreground and background colors, calculate
+ * suggested color pairs for AA and AAA level WCAG contrast ratio compliance,
+ * as applicable.
  * @param {axs.utils.Color} fgColor
  * @param {axs.utils.Color} bgColor
  * @param {number} contrastRatio
  * @param {CSSStyleDeclaration} style
- * @return {Object}
+ * @return {Object.<string, Object>} A dictionary of results for each of AA, AAA
+ *     levels, as appropriate. If the colors and font style given already meet
+ *     AAA level compliance, this will be null. Each result will be of the form
+ *     {
+ *       'fg': <color string>,
+ *       'bg': <color string>,
+ *       'contrast': <number string>
+ *     }
  */
 axs.utils.suggestColors = function(bgColor, fgColor, contrastRatio, style) {
     if (!axs.utils.isLowContrast(contrastRatio, style, true))
@@ -539,6 +620,7 @@ axs.utils.suggestColors = function(bgColor, fgColor, contrastRatio, style) {
     }
     return colors;
 }
+goog.exportSymbol('axs.utils.suggestColors', axs.utils.suggestColors);
 
 /**
  * Combine the two given color according to alpha blending.
@@ -555,6 +637,7 @@ axs.utils.flattenColors = function(fgColor, bgColor) {
 
     return new axs.utils.Color(r, g, b, a);
 };
+goog.exportSymbol('axs.utils.flattenColors', axs.utils.flattenColors);
 
 /**
  * Calculate the luminance of the given color using the WCAG algorithm.
@@ -574,6 +657,7 @@ axs.utils.calculateLuminance = function(color) {
     var ycc = axs.utils.toYCC(color);
     return ycc[0];
 };
+goog.exportSymbol('axs.utils.calculateLuminance', axs.utils.calculateLuminance);
 
 /**
  * Returns an RGB to YCC conversion matrix for the given kR, kB constants.
@@ -581,7 +665,7 @@ axs.utils.calculateLuminance = function(color) {
  * @param {number} kB
  * @return {Array.<Array.<number>>}
  */
-axs.utils.RGBToYCCMatrix = function(kR, kB) {
+axs.utils.RGBToYCCMatrix_ = function(kR, kB) {
     return [
         [
             kR,
@@ -606,7 +690,7 @@ axs.utils.RGBToYCCMatrix = function(kR, kB) {
  * @param {Array.<Array.<number>>} matrix
  * @return Array.<Array.<number>> The inverse of the given matrix.
  */
-axs.utils.invert3x3Matrix = function(matrix) {
+axs.utils.invert3x3Matrix_ = function(matrix) {
     var a = matrix[0][0];
     var b = matrix[0][1];
     var c = matrix[0][2];
@@ -630,14 +714,20 @@ axs.utils.invert3x3Matrix = function(matrix) {
     var det = a * (e*k - f*h) - b * (k*d - f*g) + c * (d*h - e*g);
     var z = 1/det;
 
-    return axs.utils.scalarMultiplyMatrix([
+    return axs.utils.scalarMultiplyMatrix_([
         [ A, D, G ],
         [ B, E, H ],
         [ C, F, K ]
     ], z);
 };
 
-axs.utils.scalarMultiplyMatrix = function(matrix, scalar) {
+/**
+ * Multiply the given matrix by the given scalar.
+ * @param {Array.<Array.<number>>} matrix
+ * @param {number} scalar
+ * @return {Array.<Array.<number>>}
+ */
+axs.utils.scalarMultiplyMatrix_ = function(matrix, scalar) {
     var result = [];
     result[0] = [];
     result[1] = [];
@@ -652,10 +742,11 @@ axs.utils.scalarMultiplyMatrix = function(matrix, scalar) {
     return result;
 }
 
-axs.utils.kR = 0.2126;
-axs.utils.kB = 0.0722;
-axs.utils.YCC_MATRIX = axs.utils.RGBToYCCMatrix(axs.utils.kR, axs.utils.kB);
-axs.utils.INVERTED_YCC_MATRIX = axs.utils.invert3x3Matrix(axs.utils.YCC_MATRIX);
+axs.utils.kR_ = 0.2126;
+axs.utils.kB_ = 0.0722;
+axs.utils.YCC_MATRIX = axs.utils.RGBToYCCMatrix_(axs.utils.kR_, axs.utils.kB_);
+axs.utils.INVERTED_YCC_MATRIX =
+  axs.utils.invert3x3Matrix_(axs.utils.YCC_MATRIX);
 
 /**
  * Multiply the given color vector by the given transformation matrix.
@@ -663,7 +754,7 @@ axs.utils.INVERTED_YCC_MATRIX = axs.utils.invert3x3Matrix(axs.utils.YCC_MATRIX);
  * @param {Array.<number>} vector A 3-element color vector
  * @return {Array.<number>} A 3-element color vector
  */
-axs.utils.convertColor = function(matrix, vector) {
+axs.utils.convertColor_ = function(matrix, vector) {
     var a = matrix[0][0];
     var b = matrix[0][1];
     var c = matrix[0][2];
@@ -685,7 +776,13 @@ axs.utils.convertColor = function(matrix, vector) {
     ];
 };
 
-axs.utils.multiplyMatrices = function(matrix1, matrix2) {
+/**
+ * Multiply the two givem matrices together.
+ * @param {Array.<Array.<number>>} matrix1
+ * @param {Array.<Array.<number>>} matrix2
+ * @return {Array.<Array.<number>>} The product.
+ */
+axs.utils.multiplyMatrices_ = function(matrix1, matrix2) {
     var result = [];
     result[0] = [];
     result[1] = [];
@@ -703,6 +800,8 @@ axs.utils.multiplyMatrices = function(matrix1, matrix2) {
 
 /**
  * Convert a given RGB color to YCC.
+ * @param {axs.utils.Color} color
+ * @return {Array.<number>} The given color in YCC form as an array [Y, C1, C2].
  */
 axs.utils.toYCC = function(color) {
     var rSRGB = color.red / 255;
@@ -713,16 +812,17 @@ axs.utils.toYCC = function(color) {
     var g = gSRGB <= 0.03928 ? gSRGB / 12.92 : Math.pow(((gSRGB + 0.055)/1.055), 2.4);
     var b = bSRGB <= 0.03928 ? bSRGB / 12.92 : Math.pow(((bSRGB + 0.055)/1.055), 2.4);
 
-    return axs.utils.convertColor(axs.utils.YCC_MATRIX, [r, g, b]);
+    return axs.utils.convertColor_(axs.utils.YCC_MATRIX, [r, g, b]);
 };
+goog.exportSymbol('axs.utils.toYCC', axs.utils.toYCC);
 
 /**
  * Convert a color from a YCC color (as a vector) to an RGB color
- * @param {Array.<number>} yccColor
+ * @param {Array.<number>} yccColor A color in YCC form as an array [Y, C1, C2].
  * @return {axs.utils.Color}
  */
 axs.utils.fromYCC = function(yccColor) {
-    var rgb = axs.utils.convertColor(axs.utils.INVERTED_YCC_MATRIX, yccColor);
+    var rgb = axs.utils.convertColor_(axs.utils.INVERTED_YCC_MATRIX, yccColor);
 
     var r = rgb[0];
     var g = rgb[1];
@@ -737,37 +837,7 @@ axs.utils.fromYCC = function(yccColor) {
 
     return new axs.utils.Color(red, green, blue, 1);
 };
-
-axs.utils.scalarMultiplyMatrix = function(matrix, scalar) {
-    var result = [];
-    result[0] = [];
-    result[1] = [];
-    result[2] = [];
-
-    for (var i = 0; i < 3; i++) {
-        for (var j = 0; j < 3; j++) {
-            result[i][j] = matrix[i][j] * scalar;
-        }
-    }
-
-    return result;
-}
-
-axs.utils.multiplyMatrices = function(matrix1, matrix2) {
-    var result = [];
-    result[0] = [];
-    result[1] = [];
-    result[2] = [];
-
-    for (var i = 0; i < 3; i++) {
-        for (var j = 0; j < 3; j++) {
-            result[i][j] = matrix1[i][0] * matrix2[0][j] +
-                           matrix1[i][1] * matrix2[1][j] +
-                           matrix1[i][2] * matrix2[2][j];
-        }
-    }
-    return result;
-}
+goog.exportSymbol('axs.utils.fromYCC', axs.utils.fromYCC);
 
 /**
  * @param {Element} element
@@ -777,6 +847,8 @@ axs.utils.getContrastRatioForElement = function(element) {
     var style = window.getComputedStyle(element, null);
     return axs.utils.getContrastRatioForElementWithComputedStyle(style, element);
 };
+goog.exportSymbol('axs.utils.getContrastRatioForElement',
+                  axs.utils.getContrastRatioForElement);
 
 /**
  * @param {CSSStyleDeclaration} style
@@ -797,6 +869,8 @@ axs.utils.getContrastRatioForElementWithComputedStyle = function(style, element)
 
     return axs.utils.calculateContrastRatio(fgColor, bgColor);
 };
+goog.exportSymbol('axs.utils.getContrastRatioForElementWithComputedStyle',
+                  axs.utils.getContrastRatioForElementWithComputedStyle);
 
 /**
  * @param {Element} element
@@ -824,6 +898,8 @@ axs.utils.isNativeTextElement = function(element) {
         return false;
     }
 };
+goog.exportSymbol('axs.utils.isNativeTextElement',
+                  axs.utils.isNativeTextElement);
 
 /**
  * @param {number} contrastRatio
@@ -842,6 +918,7 @@ axs.utils.isLowContrast = function(contrastRatio, style, opt_strict) {
             (!axs.utils.isLargeFont(style) && roundedContrastRatio < 7.0);
     }
 };
+goog.exportSymbol('axs.utils.isLowContrast', axs.utils.isLowContrast);
 
 /**
  * @param {Element} element
@@ -886,13 +963,14 @@ axs.utils.hasLabel = function(element) {
     }
     return false;
 };
+goog.exportSymbol('axs.utils.hasLabel', axs.utils.hasLabel);
 
 /**
  * @param {Element} element An element to check.
  * @return {boolean} True if the element is hidden from accessibility.
  */
 axs.utils.isElementHidden = function(element) {
-    if (!(element instanceof element.ownerDocument.defaultView.HTMLElement))
+    if (!(element instanceof element.ownerDocument.defaultView['HTMLElement']))
       return false;
 
     if (element.hasAttribute('chromevoxignoreariahidden'))
@@ -909,6 +987,7 @@ axs.utils.isElementHidden = function(element) {
 
     return false;
 };
+goog.exportSymbol('axs.utils.isElementHidden', axs.utils.isElementHidden);
 
 /**
  * @param {Element} element An element to check.
@@ -924,6 +1003,8 @@ axs.utils.isElementOrAncestorHidden = function(element) {
     else
         return false;
 };
+goog.exportSymbol('axs.utils.isElementOrAncestorHidden',
+                  axs.utils.isElementOrAncestorHidden);
 
 /**
  * @param {Element} element An element to check
@@ -933,7 +1014,8 @@ axs.utils.isElementOrAncestorHidden = function(element) {
 axs.utils.isInlineElement = function(element) {
     var tagName = element.tagName.toUpperCase();
     return axs.constants.InlineElements[tagName];
-}
+};
+goog.exportSymbol('axs.utils.isInlineElement', axs.utils.isInlineElement);
 
 /**
  * @param {Element} element
@@ -958,6 +1040,7 @@ axs.utils.getRoles = function(element) {
 
     return { 'roles': roles, 'valid': valid };
 };
+goog.exportSymbol('axs.utils.getRoles', axs.utils.getRoles);
 
 /**
  * @param {!string} propertyName
@@ -1062,7 +1145,7 @@ axs.utils.getAriaPropertyValue = function(propertyName, value, element) {
         }
         return result;
     case "tristate":
-        var validTristate = axs.utils.isPossibleValue(value.toLowerCase(), axs.constants.MIXED_VALUES, propertyName);
+        var validTristate = axs.utils.isPossibleValue_(value.toLowerCase(), axs.constants.MIXED_VALUES, propertyName);
         if (validTristate.valid) {
             result.valid = true;
             result.value = validTristate.value;
@@ -1088,7 +1171,8 @@ axs.utils.getAriaPropertyValue = function(propertyName, value, element) {
     result.reason = 'Not a valid ARIA property';
     return result;
 };
-
+goog.exportSymbol('axs.utils.getAriaPropertyValue',
+                  axs.utils.getAriaPropertyValue);
 /**
  * @param {string} propertyName The name of the property.
  * @param {string} value The value to check.
@@ -1097,16 +1181,17 @@ axs.utils.getAriaPropertyValue = function(propertyName, value, element) {
 axs.utils.isValidTokenValue = function(propertyName, value) {
     var propertyKey = propertyName.replace(/^aria-/, '');
     var propertyDetails = axs.constants.ARIA_PROPERTIES[propertyKey];
-    var possibleValues = propertyDetails.valuesSet;
-    return axs.utils.isPossibleValue(value, possibleValues, propertyName);
+    var possibleValues = propertyDetails['valuesSet'];
+    return axs.utils.isPossibleValue_(value, possibleValues, propertyName);
 };
+goog.exportSymbol('axs.utils.isValidTokenValue', axs.utils.isValidTokenValue);
 
 /**
  * @param {string} value
  * @param {Object.<string, boolean>} possibleValues
  * @return {!Object}
  */
-axs.utils.isPossibleValue = function(value, possibleValues, propertyName) {
+axs.utils.isPossibleValue_ = function(value, possibleValues, propertyName) {
     if (!possibleValues[value])
         return { 'valid': false,
                  'value': value,
@@ -1131,6 +1216,7 @@ axs.utils.isValidBoolean = function(value) {
                  'reason': '"' + value + '" is not a true/false value' };
     return { 'valid': true, 'value': parsedValue };
 };
+goog.exportSymbol('axs.utils.isValidBoolean', axs.utils.isValidBoolean);
 
 /**
  * @param {string} value
@@ -1146,6 +1232,7 @@ axs.utils.isValidIDRefValue = function(value, element) {
                  'reason': 'No element with ID "' + value + '"' };
     return { 'valid': true, 'idref': value };
 };
+goog.exportSymbol('axs.utils.isValidIDRefValue', axs.utils.isValidIDRefValue);
 
 /**
  * @param {string} value
@@ -1166,6 +1253,7 @@ axs.utils.isValidNumber = function(value) {
     }
     return { 'valid': true, 'value': parsedValue };
 };
+goog.exportSymbol('axs.utils.isValidNumber', axs.utils.isValidNumber);
 
 /**
  * @param {Element} element
@@ -1174,17 +1262,19 @@ axs.utils.isValidNumber = function(value) {
 axs.utils.isElementImplicitlyFocusable = function(element) {
     var defaultView = element.ownerDocument.defaultView;
 
-    if (element instanceof defaultView.HTMLAnchorElement ||
-        element instanceof defaultView.HTMLAreaElement)
+    if (element instanceof defaultView['HTMLAnchorElement'] ||
+        element instanceof defaultView['HTMLAreaElement'])
         return element.hasAttribute('href');
-    if (element instanceof defaultView.HTMLInputElement ||
-        element instanceof defaultView.HTMLSelectElement ||
-        element instanceof defaultView.HTMLTextAreaElement ||
-        element instanceof defaultView.HTMLButtonElement ||
-        element instanceof defaultView.HTMLIFrameElement)
+    if (element instanceof defaultView['HTMLInputElement'] ||
+        element instanceof defaultView['HTMLSelectElement'] ||
+        element instanceof defaultView['HTMLTextAreaElement'] ||
+        element instanceof defaultView['HTMLButtonElement'] ||
+        element instanceof defaultView['HTMLIFrameElement'])
         return !element.disabled;
     return false;
 };
+goog.exportSymbol('axs.utils.isElementImplicitlyFocusable',
+            axs.utils.isElementImplicitlyFocusable);
 
 /**
  * Returns an array containing the values of the given JSON-compatible object.
@@ -1200,6 +1290,7 @@ axs.utils.values = function(obj) {
     }
     return values;
 };
+goog.exportSymbol('axs.utils.values', axs.utils.values);
 
 /**
  * Returns an object containing the same keys and values as the given
@@ -1215,6 +1306,7 @@ axs.utils.namedValues = function(obj) {
     }
     return values
 };
+goog.exportSymbol('axs.utils.namedValues', axs.utils.namedValues);
 
 /** Gets a CSS selector text for a DOM object.
  * @param {Node} obj The DOM object.
@@ -1292,3 +1384,5 @@ axs.utils.getQuerySelectorText = function(obj) {
 
   return '';
 };
+goog.exportSymbol('axs.utils.getQuerySelectorText',
+                  axs.utils.getQuerySelectorText);

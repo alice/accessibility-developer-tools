@@ -20,15 +20,15 @@ goog.require('axs.utils');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.mainRoleOnInappropriateElement = {
-    name: 'mainRoleOnInappropriateElement',
-    heading: 'role=main should only appear on significant elements',
-    url: '',
-    severity: axs.constants.Severity.WARNING,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['mainRoleOnInappropriateElement'] = {
+    'name': 'mainRoleOnInappropriateElement',
+    'heading': 'role=main should only appear on significant elements',
+    'url': '',
+    'severity': axs.constants.Severity.WARNING,
+    'relevantElementMatcher': function(element) {
         return axs.browserUtils.matchSelector(element, '[role~=main]');
     },
-    test: function(element) {
+    'test': function(element) {
         if (axs.utils.isInlineElement(element))
             return true;
         var computedTextContent = axs.properties.getTextFromDescendantContent(element);
@@ -37,5 +37,5 @@ axs.AuditRule.specs.mainRoleOnInappropriateElement = {
 
         return false;
     },
-    code: 'AX_ARIA_04'
+    'code': 'AX_ARIA_04'
 };

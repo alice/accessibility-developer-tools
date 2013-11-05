@@ -27,3 +27,5 @@ axs.browserUtils.matchSelector = function(element, selector) {
         return element.mozMatchesSelector(selector);
     return false;
 }
+goog.exportSymbol('axs.browserUtils.matchSelector',
+                  axs.browserUtils.matchSelector);

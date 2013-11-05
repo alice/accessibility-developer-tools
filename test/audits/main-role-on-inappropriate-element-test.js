@@ -21,8 +21,7 @@ test('No role=main -> no relevant elements', function() {
 
   deepEqual(
     axs.AuditRules.getRule('mainRoleOnInappropriateElement').run({ scope: fixture }),
-    { result: axs.constants.AuditResult.NA }
-  );
+    new axs.AuditResult(axs.constants.AuditResult.NA));
 });
 
 test('role=main on empty element === fail', function() {
@@ -31,10 +30,12 @@ test('role=main on empty element === fail', function() {
   div.setAttribute('role', 'main');
   fixture.appendChild(div);
 
+  var expectedResult = new axs.AuditResult(axs.constants.AuditResult.FAIL);
+  expectedResult.elements = [div];
+
   deepEqual(
     axs.AuditRules.getRule('mainRoleOnInappropriateElement').run({ scope: fixture }),
-    { elements: [div], result: axs.constants.AuditResult.FAIL }
-  );
+    expectedResult);
 });
 
 test('role=main on element with textContent < 50 characters === pass', function() {
@@ -44,10 +45,12 @@ test('role=main on element with textContent < 50 characters === pass', function(
   div.textContent = 'Lorem ipsum dolor sit amet.';
   fixture.appendChild(div);
 
+  var expectedResult = new axs.AuditResult(axs.constants.AuditResult.FAIL);
+  expectedResult.elements = [div];
+
   deepEqual(
     axs.AuditRules.getRule('mainRoleOnInappropriateElement').run({ scope: fixture }),
-    { elements: [div], result: axs.constants.AuditResult.FAIL }
-  );
+    expectedResult);
 });
 
 test('role=main on element with textContent >= 50 characters === pass', function() {
@@ -57,10 +60,12 @@ test('role=main on element with textContent >= 50 characters === pass', function
   div.textContent = 'Lorem ipsum dolor sit amet, consectetur cras amet.';
   fixture.appendChild(div);
 
+  var expectedResult = new axs.AuditResult(axs.constants.AuditResult.PASS);
+  expectedResult.elements = [];
+
   deepEqual(
     axs.AuditRules.getRule('mainRoleOnInappropriateElement').run({ scope: fixture }),
-    { elements: [], result: axs.constants.AuditResult.PASS }
-  );
+    expectedResult);
 });
 
 test('role=main on inline element === fail', function() {
@@ -70,7 +75,10 @@ test('role=main on inline element === fail', function() {
   span.textContent = 'Lorem ipsum dolor sit amet, consectetur cras amet.';
   fixture.appendChild(span);
 
+  var expectedResult = new axs.AuditResult(axs.constants.AuditResult.FAIL);
+  expectedResult.elements = [span];
+
   deepEqual(
     axs.AuditRules.getRule('mainRoleOnInappropriateElement').run({ scope: fixture }),
-    { elements: [span], result: axs.constants.AuditResult.FAIL });
+    expectedResult);
 });

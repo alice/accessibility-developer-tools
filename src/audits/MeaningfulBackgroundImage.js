@@ -20,15 +20,15 @@ goog.require('axs.utils');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.elementsWithMeaningfulBackgroundImage = {
-    name: 'elementsWithMeaningfulBackgroundImage',
-    severity: axs.constants.Severity.WARNING,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['elementsWithMeaningfulBackgroundImage'] = {
+    'name': 'elementsWithMeaningfulBackgroundImage',
+    'severity': axs.constants.Severity.WARNING,
+    'relevantElementMatcher': function(element) {
         return !axs.utils.isElementOrAncestorHidden(element);
     },
-    heading: 'Meaningful images should not be used in element backgrounds',
-    url: 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_image_01--meaningful-images-should-not-be-used-in-element-backgrounds',
-    test: function(el) {
+    'heading': 'Meaningful images should not be used in element backgrounds',
+    'url': 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_image_01--meaningful-images-should-not-be-used-in-element-backgrounds',
+    'test': function(el) {
         if (el.textContent && el.textContent.length > 0) {
           return false;
         }
@@ -43,5 +43,5 @@ axs.AuditRule.specs.elementsWithMeaningfulBackgroundImage = {
         // TODO(bobbrose): could also check for background repeat and position.
         return width < 150 && height < 150;
     },
-    code: 'AX_IMAGE_01'
+    'code': 'AX_IMAGE_01'
 };

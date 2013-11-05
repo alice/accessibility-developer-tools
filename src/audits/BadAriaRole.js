@@ -19,17 +19,17 @@ goog.require('axs.utils');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.badAriaRole = {
-    name: 'badAriaRole',
-    heading: 'Elements with ARIA roles must use a valid, non-abstract ARIA role',
-    url: 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_aria_01--elements-with-aria-roles-must-use-a-valid-non-abstract-aria-role',
-    severity: axs.constants.Severity.SEVERE,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['badAriaRole'] = {
+    'name': 'badAriaRole',
+    'heading': 'Elements with ARIA roles must use a valid, non-abstract ARIA role',
+    'url': 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_aria_01--elements-with-aria-roles-must-use-a-valid-non-abstract-aria-role',
+    'severity': axs.constants.Severity.SEVERE,
+    'relevantElementMatcher': function(element) {
         return axs.browserUtils.matchSelector(element, "[role]");
     },
-    test: function(element) {
+    'test': function(element) {
         var roles = axs.utils.getRoles(element)
         return !roles.valid;
     },
-    code: 'AX_ARIA_01'
+    'code': 'AX_ARIA_01'
 };

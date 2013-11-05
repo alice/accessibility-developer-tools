@@ -18,18 +18,18 @@ goog.require('axs.constants.Severity');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.linkWithUnclearPurpose = {
-    name: 'linkWithUnclearPurpose',
-    heading: 'The purpose of each link should be clear from the link text',
-    url: '',
-    severity: axs.constants.Severity.WARNING,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['linkWithUnclearPurpose'] = {
+    'name': 'linkWithUnclearPurpose',
+    'heading': 'The purpose of each link should be clear from the link text',
+    'url': '',
+    'severity': axs.constants.Severity.WARNING,
+    'relevantElementMatcher': function(element) {
         return axs.browserUtils.matchSelector(element, 'a');
     },
-    test: function(anchor) {
+    'test': function(anchor) {
         // This only looks for "click here" in a link's content. Not
         // comprehensive, but should catch the worst case.
         return (/^\s*click\s*here\s*[^a-z]?$/i).test(anchor.textContent);
     },
-    code: 'AX_TITLE_01'
+    'code': 'AX_TITLE_01'
 };

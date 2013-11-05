@@ -44,7 +44,7 @@ axs.AuditRule = function(spec) {
     this.severity = spec.severity;
 
     /** @type {function(Element): boolean} */
-    this.relevantElementMatcher_ = spec.relevantElementMatcher;
+    this.relevantElementMatcher_ = spec['relevantElementMatcher'];
 
     /** @type {function(Element): boolean} */
     this.test_ = spec.test;
@@ -60,7 +60,15 @@ axs.AuditRule = function(spec) {
 
     /** @type {boolean} */
     this.requiresConsoleAPI = !!spec['opt_requiresConsoleAPI'];
+
+    goog.exportProperty(this, 'name', this.name);
+    goog.exportProperty(this, 'severity', this.severity);
+    goog.exportProperty(this, 'code', this.code);
+    goog.exportProperty(this, 'heading', this.heading);
+    goog.exportProperty(this, 'url', this.url);
+    goog.exportProperty(this, 'requiresConsoleAPI', this.requiresConsoleAPI);
 };
+goog.exportSymbol('axs.AuditRule', axs.AuditRule);
 
 /** @typedef {{ name: string,
  *              heading: string,
@@ -89,15 +97,6 @@ axs.AuditRule.Spec;
  */
 axs.AuditRule.requiredFields =
     [ 'name', 'severity', 'relevantElementMatcher', 'test', 'code', 'heading' ];
-
-
-/**
- * The return value for a non-applicable audit result.
- *
- * @type {{result: string}}
- * @const
- */
-axs.AuditRule.NOT_APPLICABLE = { result: axs.constants.AuditResult.NA };
 
 /**
  * Add the given element to the given array.  This is abstracted so that subclasses
@@ -142,7 +141,7 @@ axs.AuditRule.collectMatchingElements = function(node, matcher, collection) {
  *         number of results is found, 'resultsTruncated' is set to true in the
  *         returned object. If this is null or undefined, all results will be
  *         returned.
- * @return {?Object.<string, (axs.constants.AuditResult|?Array.<Element>|boolean)>}
+ * @return {axs.AuditResult}
  */
 axs.AuditRule.prototype.run = function(options) {
     options = options || {};
@@ -164,7 +163,7 @@ axs.AuditRule.prototype.run = function(options) {
     }
 
     if (!relevantElements.length)
-        return { result: axs.constants.AuditResult.NA };
+        return new axs.AuditResult(axs.constants.AuditResult.NA);
     for (var i = 0; i < relevantElements.length; i++) {
         if (maxResults != null && failingElements.length >= maxResults)
             break;
@@ -172,12 +171,17 @@ axs.AuditRule.prototype.run = function(options) {
         if (!ignored(element) && this.test_(element))
             this.addElement(failingElements, element);
     }
-    var result = failingElements.length ? axs.constants.AuditResult.FAIL : axs.constants.AuditResult.PASS;
-    var results = { result: result, elements: failingElements};
+    var auditResult = failingElements.length ? axs.constants.AuditResult.FAIL
+                                             : axs.constants.AuditResult.PASS;
+    var result = new axs.AuditResult(auditResult);
+    result.elements = failingElements;
     if (i < relevantElements.length)
-        results['resultsTruncated'] = true;
+      result.resultsTruncated = true;
 
-    return results;
+    return result;
 };
+goog.exportProperty(axs.AuditRule.prototype, 'run',
+                    axs.AuditRule.prototype.run)
 
-axs.AuditRule.specs = {};
+/** @type {!Object.<string, axs.AuditRule.Spec>} */ axs.AuditRule.specs = {};
+goog.exportSymbol('axs.AuditRule.specs', axs.AuditRule.specs);

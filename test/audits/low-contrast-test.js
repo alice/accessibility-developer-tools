@@ -8,7 +8,7 @@ test("No text = no relevant elements", function() {
   fixture.appendChild(div);
   deepEqual(
     axs.AuditRules.getRule('lowContrastElements').run({ scope: fixture }),
-    { result: axs.constants.AuditResult.NA }
+    new axs.AuditResult(axs.constants.AuditResult.NA)
   );
 });
 
@@ -19,9 +19,13 @@ test("Black on white = no problem", function() {
   div.style.color = 'black';
   div.textContent = 'Some text';
   fixture.appendChild(div);
+
+  var expectedResult = new axs.AuditResult(axs.constants.AuditResult.PASS);
+  expectedResult.elements = [];
+
   deepEqual(
     axs.AuditRules.getRule('lowContrastElements').run({ scope: fixture }),
-    { elements: [], result: axs.constants.AuditResult.PASS }
+    expectedResult
   );
 });
 
@@ -32,9 +36,13 @@ test("Low contrast = fail", function() {
   div.style.color = '#aaa';  // Contrast ratio = 2.32
   div.textContent = 'Some text';
   fixture.appendChild(div);
+
+  var expectedResult = new axs.AuditResult(axs.constants.AuditResult.FAIL);
+  expectedResult.elements = [div];
+
   deepEqual(
     axs.AuditRules.getRule('lowContrastElements').run({ scope: fixture }),
-    { elements: [div], result: axs.constants.AuditResult.FAIL }
+    expectedResult
   );
 });
 
@@ -45,9 +53,13 @@ test("Opacity is handled", function() {
   elementWithOpacity.style.opacity = '0.4';
   elementWithOpacity.textContent = 'Some text';
   fixture.appendChild(elementWithOpacity);
+
+  var expectedResult = new axs.AuditResult(axs.constants.AuditResult.FAIL);
+  expectedResult.elements = [elementWithOpacity];
+
   deepEqual(
     axs.AuditRules.getRule('lowContrastElements').run({ scope: fixture }),
-    { elements: [elementWithOpacity], result: axs.constants.AuditResult.FAIL }
+    expectedResult
   );
 });
 
@@ -58,8 +70,12 @@ test("Uses tolerance value", function() {
   div.style.color = '#777'; // Contrast ratio = 4.48
   div.textContent = 'Some text';
   fixture.appendChild(div);
+
+  var expectedResult = new axs.AuditResult(axs.constants.AuditResult.PASS);
+  expectedResult.elements = [];
+
   deepEqual(
     axs.AuditRules.getRule('lowContrastElements').run({ scope: fixture }),
-    { elements: [], result: axs.constants.AuditResult.PASS }
+    expectedResult
   );
 });

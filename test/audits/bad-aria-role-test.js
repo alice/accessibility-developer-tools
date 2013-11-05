@@ -5,7 +5,7 @@ test("No elements === no problems.", function() {
   var fixture = document.getElementById('qunit-fixture');
   deepEqual(
     axs.AuditRules.getRule('badAriaRole').run({ scope: fixture }),
-    { result: axs.constants.AuditResult.NA }
+    new axs.AuditResult(axs.constants.AuditResult.NA)
   );
 });
 
@@ -17,7 +17,7 @@ test("No roles === no problems.", function() {
 
   deepEqual(
     axs.AuditRules.getRule('badAriaRole').run({ scope: fixture }),
-    { result: axs.constants.AuditResult.NA }
+    new axs.AuditResult(axs.constants.AuditResult.NA)
   );
 });
 
@@ -32,9 +32,11 @@ test("Good role === no problems.", function() {
     }
   }
 
+  var expectedResult = new axs.AuditResult(axs.constants.AuditResult.PASS);
+  expectedResult.elements = [];
   deepEqual(
     axs.AuditRules.getRule('badAriaRole').run({ scope: fixture }),
-    { elements: [], result: axs.constants.AuditResult.PASS }
+    expectedResult
   );
 });
 
@@ -44,9 +46,13 @@ test("Bad role == problem", function() {
   var div = document.createElement('div');
   div.setAttribute('role', 'not-an-aria-role');
   fixture.appendChild(div);
+
+  var expectedResult = new axs.AuditResult(axs.constants.AuditResult.FAIL);
+  expectedResult.elements = [div];
+
   deepEqual(
     axs.AuditRules.getRule('badAriaRole').run({ scope: fixture }),
-    { elements: [div], result: axs.constants.AuditResult.FAIL }
+    expectedResult
   );
 
 });

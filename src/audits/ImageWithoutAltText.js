@@ -20,17 +20,17 @@ goog.require('axs.utils');
 /**
  * @type {axs.AuditRule.Spec}
  */
-axs.AuditRule.specs.imagesWithoutAltText = {
-    name: 'imagesWithoutAltText',
-    heading: 'Images should have an alt attribute',
-    url: 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_text_02--images-should-have-an-alt-attribute-unless-they-have-an-aria-role-of-presentation',
-    severity: axs.constants.Severity.WARNING,
-    relevantElementMatcher: function(element) {
+axs.AuditRule.specs['imagesWithoutAltText'] = {
+    'name': 'imagesWithoutAltText',
+    'heading': 'Images should have an alt attribute',
+    'url': 'https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#-ax_text_02--images-should-have-an-alt-attribute-unless-they-have-an-aria-role-of-presentation',
+    'severity': axs.constants.Severity.WARNING,
+    'relevantElementMatcher': function(element) {
         return axs.browserUtils.matchSelector(element, 'img') &&
             !axs.utils.isElementOrAncestorHidden(element);
     },
-    test: function(image) {
+    'test': function(image) {
         return (!image.hasAttribute('alt') && image.getAttribute('role') != 'presentation');
     },
-    code: 'AX_TEXT_02'
+    'code': 'AX_TEXT_02'
 };

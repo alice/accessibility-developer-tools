@@ -21,17 +21,19 @@ module.exports = function(grunt) {
               "./src/js/Properties.js",
               "./src/js/AuditRule.js",
               "./src/js/AuditRules.js",
+              "./src/js/AuditResult.js",
               "./src/js/AuditResults.js",
               "./src/js/Audit.js",
-              "./src/audits/*"
+              "./src/audits/*.js"
           ]
         },
         options: {
           "language_in": "ECMASCRIPT5",
-          "formatting": "PRETTY_PRINT",
+//          "formatting": "PRETTY_PRINT",  // Uncomment to get one statement per line
           "summary_detail_level": 3,
           "warning_level": "VERBOSE",
-          "compilation_level": "SIMPLE_OPTIMIZATIONS",
+//        "compilation_level": "SIMPLE_OPTIMIZATIONS",  // Uncomment and comment out below for minimal renaming
+          "compilation_level": "ADVANCED_OPTIMIZATIONS",
           "output_wrapper": "'<%= grunt.file.read('scripts/output_wrapper.txt') %>'",
           "externs": "./src/js/externs/externs.js"
         }
